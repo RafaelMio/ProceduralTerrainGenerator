@@ -36,18 +36,6 @@ namespace Player
             }
         }
 
-        [Header("Camera Params")]
-        [SerializeField] private float cameraNoramlFOV = 75f;
-        [SerializeField] private float cameraSprintFOV = 90f;
-        [SerializeField] private float cameraFOVSmoothing = 5f;
-        private float targetCameraFOV
-        {
-            get
-            {
-                return isSprinting ? cameraSprintFOV : cameraNoramlFOV;
-            }
-        }
-
         [Header("Physics Params")]
         [SerializeField] private float gravityScale = 2f;
         public float verticalVelocity = 0f;
@@ -62,7 +50,7 @@ namespace Player
         public bool sprintInput;
 
         [Header("Components")]
-        [SerializeField] private CinemachineCamera fpCamera;
+        [SerializeField] private Camera fpCamera;
         [SerializeField] private CharacterController characterController;
 
         [Header("Events")]
@@ -80,7 +68,6 @@ namespace Player
         {
             MoveUpdate();
             LookUpdate();
-            CameraUpdate();
 
             if (!wasGrounded && isgrounded)
             {
@@ -147,11 +134,6 @@ namespace Player
             CurrentPitch -= input.y;
             fpCamera.transform.localRotation = Quaternion.Euler(CurrentPitch, 0f, 0f);
             transform.Rotate(Vector3.up * input.x);
-        }
-
-        private void CameraUpdate()
-        {
-            fpCamera.Lens.FieldOfView = Mathf.Lerp(fpCamera.Lens.FieldOfView, targetCameraFOV, cameraFOVSmoothing * Time.deltaTime);
         }
     }
 }

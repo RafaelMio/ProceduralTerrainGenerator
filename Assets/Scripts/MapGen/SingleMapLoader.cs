@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class SingleMapLoader : MonoBehaviour
@@ -10,10 +11,12 @@ public class SingleMapLoader : MonoBehaviour
 
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private CinemachineBrain brain;
 
     private void Start()
     {
         mapGenerator.RequestMapData(Vector2.zero, OnMapDataReceived);
+        
     }
 
     private void Update()
